@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ModeToggle } from "@/components/layout/mode-toggle";
+import { AtlasLogo } from "@/components/layout/atlas-logo";
 
 const pageTitles: Record<string, string> = {
   "/dashboard": "dashboard",
@@ -68,6 +69,12 @@ export function Header({ onOpenSidebar }: HeaderProps) {
         >
           <Menu className="h-5 w-5" />
         </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <Link href="/dashboard">
+            <AtlasLogo iconOnly size="sm" />
+          </Link>
+          <span className="text-muted-foreground/40 font-light">|</span>
+        </div>
         <h1 className="truncate text-base font-semibold text-foreground sm:text-lg">
           {t(titleKey as string)}
         </h1>
