@@ -31,6 +31,11 @@ import { GitBranch, Plus, ChevronDown, Settings, Zap, TrendingUp } from "lucide-
 import { toast } from "sonner";
 import { useCan } from "@/hooks/use-can";
 import { useAuth } from "@/hooks/use-auth";
+import { ScoringRulesDrawer } from "@/components/scoring/scoring-rules-drawer";
+import { TreatmentQuoteBuilder } from "@/components/quotes/treatment-quote-builder";
+import { SLAEscalationMatrix } from "@/components/sla/sla-escalation-matrix";
+import { BlueprintModal } from "@/components/pipelines/blueprint-modal";
+import { ShieldAlert } from "lucide-react";
 import { GatedButton } from "@/components/ui/gated-button";
 import { useTranslations } from "next-intl";
 
@@ -60,10 +65,12 @@ export default function PipelinesPage() {
   const [newPipelineName, setNewPipelineName] = useState("");
   const [creating, setCreating] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [showSLAMatrix, setShowSLAMatrix] = useState(false);
 
   const [dealFormOpen, setDealFormOpen] = useState(false);
   const [editingDeal, setEditingDeal] = useState<Deal | null>(null);
   const [defaultStageId, setDefaultStageId] = useState<string>("");
+  const [blueprintModalOpen, setBlueprintModalOpen] = useState(false);
 
   const seedAttempted = useRef(false);
 
@@ -329,7 +336,19 @@ export default function PipelinesPage() {
           </DropdownMenu>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <ScoringRulesDrawer />
+          <TreatmentQuoteBuilder />
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowSLAMatrix(!showSLAMatrix)}
+            className="gap-2 border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive/20 text-xs"
+          >
+            <ShieldAlert className="h-4 w-4" />
+            {showSLAMatrix ? "SLA Matrixini Gizle" : "SLA Matrixi"}
+          </Button>
+
           <GatedButton
             variant="outline"
             canAct={canEditSettings}
@@ -352,6 +371,12 @@ export default function PipelinesPage() {
           </GatedButton>
         </div>
       </div>
+
+      {showSLAMatrix && (
+        <div className="animate-in fade-in slide-in-from-top-2 duration-200">
+          <SLAEscalationMatrix />
+        </div>
+      )}
 
       {/* Navigation Tabs */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)}>

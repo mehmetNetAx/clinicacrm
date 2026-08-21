@@ -5,6 +5,8 @@ import { fetchHealthTourismLogistics, createHealthTourismLogistics } from '@/lib
 import { fetchPatients } from '@/lib/clinical/service';
 import { HealthTourismLogistics } from '@/types/healthcare';
 import { Patient } from '@/types/clinical';
+import { TreatmentQuoteBuilder } from '@/components/quotes/treatment-quote-builder';
+import { ExternalLink } from 'lucide-react';
 import {
   Plane,
   Building,
@@ -124,13 +126,24 @@ export default function HealthTourismPage() {
             Yurt dışı hastaları için VIP havalimanı transferi, otel, uçuş ve tercüman takibi.
           </p>
         </div>
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90"
-        >
-          <Plus className="h-4 w-4" />
-          Yeni Lojistik Kaydı Ekle
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <TreatmentQuoteBuilder />
+          <button
+            type="button"
+            onClick={() => window.open('/patient-portal/pt_demo_token', '_blank')}
+            className="inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm font-medium text-emerald-400 hover:bg-emerald-500/20 shadow-sm"
+          >
+            <ExternalLink className="h-4 w-4" />
+            Hasta Self-Servis Portalı
+          </button>
+          <button
+            onClick={() => setIsAddModalOpen(true)}
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90"
+          >
+            <Plus className="h-4 w-4" />
+            Yeni Lojistik Kaydı Ekle
+          </button>
+        </div>
       </div>
 
       {/* Toast Notification */}
